@@ -5,6 +5,9 @@ import csv
 import math
 from math import e
 
+# Module for calling sys.exit()
+import sys
+
 #
 # function to calculate new fish weight, given current weight & current temperature
 #
@@ -35,19 +38,22 @@ with open(csvpath, newline='') as csvfile:
     cur_weight = 1 
     print("Initial fish weight: ", cur_weight)
 
+    try: 
     # Now read each row of data after the header
-    i = 2 # row number
-    for row in csvreader: 
-        try: 
+        i = 2 # row number
+        for row in csvreader: 
+
             # Temperature is 3rd column. Convert it to float.
             temp_cur = float(row[2])
             # Recalculate weight 
             cur_weight = calc_weight(cur_weight, temp_cur)
             i += 1
-        except Exception as e:
+            
+    except Exception as e:
             print ("Error in reading ", csvpath)
             print ("Row number: ", i)
             print ("Exception: ", e)
+            sys.exit(0)   
 
     print("Final fish weight: ", round(cur_weight, 6))
 
